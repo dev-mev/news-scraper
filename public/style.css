@@ -1,0 +1,30 @@
+body { 
+  background-color: rgb(110, 241, 250)
+}
+
+#wrapper {
+  width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5%;
+}
+
+textarea, input {
+  display: block;
+  width: 100%;
+  background-color: rgb(199, 244, 252);
+}
+
+input {
+  height: 36px;
+  font-size: 24px;
+}
+
+textarea {
+  height: 200px;
+  font-size: 18px;
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, .5);
+}
