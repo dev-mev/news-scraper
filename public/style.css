@@ -1,5 +1,6 @@
 body { 
-  background-color: rgb(110, 241, 250)
+  background: url("./images/jeremy-galliani-494777-unsplash.jpg");
+  background-size: 50%;
 }
 
 #wrapper {
@@ -26,5 +27,18 @@ textarea {
 }
 
 .carousel-caption {
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, .6);
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  width: 100px;
+}
+
+#headline {
+  color: red;
+}
+ h3 {
+   color: white;
+ }

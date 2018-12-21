@@ -20,6 +20,10 @@ mongoose.connect("mongodb://localhost/newsScraper", { useNewUrlParser: true });
 
 // A GET route for scraping the site
 app.get("/scrape", function (req, res) {
+  db.News.remove({}).catch(function (err) {
+    res.json(err);
+  });
+
   axios.get("https://wwd.com").then(function (response) {
     const $ = cheerio.load(response.data);
 
@@ -49,7 +53,7 @@ app.get("/scrape", function (req, res) {
   res.redirect("/");
 });
 
-// Route for getting all Articles from the db
+// Route for getting all news from the db
 app.get("/news", function (req, res) {
   db.News.find({})
     .then(function (dbNews) {
