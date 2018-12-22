@@ -13,17 +13,11 @@ const app = express();
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Make public a static folder
-app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost/newsScraper", { useNewUrlParser: true });
 
 // A GET route for scraping the site
-app.get("/scrape", function (req, res) {
-  db.News.remove({}).catch(function (err) {
-    res.json(err);
-  });
-
+app.get("/", function (req, res, next) {
   axios.get("https://wwd.com").then(function (response) {
     const $ = cheerio.load(response.data);
 
@@ -47,15 +41,16 @@ app.get("/scrape", function (req, res) {
           });
       }
     });
-    // Send a message to the client
-    res.send("Scrape Complete");
+    next();
   });
-  res.redirect("/");
 });
+
+// Make public a static folder
+app.use("/", express.static("public"));
 
 // Route for getting all news from the db
 app.get("/news", function (req, res) {
-  db.News.find({})
+  db.News.find({}).sort({ created_at: -1 })
     .then(function (dbNews) {
       res.json(dbNews);
     })

@@ -23,6 +23,11 @@ const NewsSchema = new Schema({
   comment: {
     type: Schema.Types.ObjectId,
     ref: "Comment"
+  },
+  created_at: {
+    type: Date,
+    required: true,
+    default: Date.now
   }
 });
 
