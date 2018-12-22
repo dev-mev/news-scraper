@@ -38,7 +38,7 @@ $(document).on("click", ".commentBtn", function () {
         $("<input id='titleinput' name='title' placeholder='enter title'>"),
         $("<textarea id='bodyinput' name='body'>"),
         $("<div class='modal-footer'>"),
-        $("<button id='savenote' type='submit' class='btn btn-primary'>Save changes</button>")
+        $("<button id='saveNote' type='submit' class='btn btn-primary'>Save changes</button>")
           .attr("data-id", data._id)
           .click(saveNote)
       );
@@ -49,6 +49,11 @@ $(document).on("click", ".commentBtn", function () {
         $("#titleinput").val(data.comment.title);
         // Place the body of the note in the body textarea
         $("#bodyinput").val(data.comment.body);
+        $(".modal-footer").append(
+          $("<button id='deleteNote' type='submit' class='btn btn-primary'>Delete Comment</button>")
+            .attr("data-comment-id", data.comment._id)
+            .click(deleteNote)
+        );
       }
     });
 });
@@ -61,13 +66,36 @@ function saveNote() {
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "POST",
-    url: "/news/" + thisId,
+    url: "/comment/" + thisId,
     data: {
       // Value taken from title input
       title: $("#titleinput").val(),
       // Value taken from note textarea
       body: $("#bodyinput").val()
     }
+  })
+    // With that done
+    .then(function (data) {
+      // Log the response
+      console.log(data);
+      // Empty the notes section
+      $("#comments").empty();
+    });
+
+  // Also, remove the values entered in the input and textarea for note entry
+  $("#titleinput").val("");
+  $("#bodyinput").val("");
+}
+
+function deleteNote() {
+  // Grab the id associated with the article from the submit button
+  const thisId = $(this).attr("data-comment-id");
+  $("#commentsModal").modal("toggle");
+
+  // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+    method: "DELETE",
+    url: "/comment/" + thisId
   })
     // With that done
     .then(function (data) {

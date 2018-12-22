@@ -72,11 +72,11 @@ app.get("/news/:id", function (req, res) {
 });
 
 // Route for saving/updating an Article's associated comment
-app.post("/news/:id", function (req, res) {
+app.post("/comment/:newsId", function (req, res) {
   console.log(req.body);
   db.Comment.create(req.body)
     .then(function (dbComment) {
-      return db.News.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
+      return db.News.findOneAndUpdate({ _id: req.params.newsId }, { comment: dbComment._id }, { new: true });
     })
     .then(function (dbNews) {
       res.json(dbNews);
@@ -86,6 +86,16 @@ app.post("/news/:id", function (req, res) {
     });
 });
 
+// Route for deleting an Article's associated comment
+app.delete("/comment/:id", function (req, res) {
+  db.Comment.findByIdAndDelete(req.params.id)
+    .then(function () {
+      res.status(200).end();
+    })
+    .catch(function (err) {
+      res.status(500).json(err);
+    });
+});
 
 // Listen on port 3000
 app.listen(PORT, function () {
