@@ -1,2 +1,4 @@
 # news-scraper
-Web app using Mongoose and Cheerio to scrape news from another site and lets users view and leave comments on the latest news.
+Web app using Mongoose and Cheerio to scrape news from www.com and allows users to view and leave comments on the articles.
+
+Deployed on Heroku (may take a minute to load): https://mv-news-scraper.herokuapp.com/
