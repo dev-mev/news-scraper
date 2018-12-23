@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 const db = require("./models");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -15,10 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsScraper";
 
 mongoose.connect(MONGODB_URI);
-
 // A GET route for scraping the site
 app.get("/", function (req, res, next) {
   axios.get("https://wwd.com").then(function (response) {
