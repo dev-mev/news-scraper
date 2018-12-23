@@ -10,6 +10,10 @@ body {
   padding-top: 5%;
 }
 
+.title-link{
+  color: white;
+}
+
 textarea, input {
   display: block;
   width: 100%;
@@ -34,9 +38,10 @@ textarea {
 .carousel-control-next-icon {
   height: 100px;
   width: 100px;
+  background-color: black;
 }
 
-#headline {
+.headline {
   color: red;
 }
  h3 {

@@ -21,7 +21,7 @@ app.get("/", function (req, res, next) {
   axios.get("https://wwd.com").then(function (response) {
     const $ = cheerio.load(response.data);
 
-    $(".hp-card__story-card-post").each(function (i, element) {
+    $(".hp-card__story-card-post").each(function () {
       const result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
@@ -29,13 +29,9 @@ app.get("/", function (req, res, next) {
       result.url = $(this).children(".hp-card__story-card-article").children(".hp-card__story-card-header").children("a").attr("href");
       result.blurb = $(this).children(".hp-card__story-card-article").children(".hp-card__story-card-intro").text();
       result.image = $(this).children(".hp-card__story-card-photo").children("img").attr("data-lazy-src");
-      console.log(JSON.stringify(result));
 
       if (result.headline && result.url && result.image) {
         db.News.create(result)
-          .then(function (dbNews) {
-            console.log(dbNews);
-          })
           .catch(function (err) {
             console.log(err);
           });
@@ -59,7 +55,7 @@ app.get("/news", function (req, res) {
     });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's comment
+// Route for grabbing a specific Article by id, populate it with its comment
 app.get("/news/:id", function (req, res) {
   db.News.findOne({ _id: req.params.id })
     .populate("comment")
